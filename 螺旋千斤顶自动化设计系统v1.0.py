@@ -177,10 +177,15 @@ print('固定螺钉选用GB/T68——2000 M8×20开槽沉头螺钉')
 print('###############底座设计###############\n')
 print('（1）材料：HT100 铸铁 \n（2）尺寸设计：见图 5，取壁厚δ = 10mm，锥度按照1: 5 设计。')
 D5 = D + 6
-D6 = D5 + H1 / 5
+D6 = D5 + (H1 / 5)
 sigma_p = 2.5
-D7 = pow((4 * F) / (pi * sigma_p) + pow(D6, 2), 0.5)
+D7 = pow((4 * F * 1000) / (pi * sigma_p) + pow(D6, 2), 0.5)
 D8 = D1
+print('D5 = ', D5)
+print('D6 = ', D6)
+print('[σ]p = ', sigma_p)
+print('D7 = ', D7)
+print('D8 = ', D8)
 # 千斤顶的效率
 eta = (F * P) / (2 * pi * (M1 + M2))
 if eta < 0.3:
