@@ -81,7 +81,7 @@ print('挡圈厚度：8mm')
 print('螺钉直径为：', 0.25 * d, 'mm')
 
 # 强度校核
-T = F * d2 / 2 * math.tan(phi + rho_)
+T = F * d2 / 2 * math.tan((phi + rho_) * pi / 180)
 sigma = (4 * F * pow(10, 9)) / (pi * pow(d1, 2))
 tau = T / (0.2 * pow(d1, 3)) * pow(10, 9)
 sigma_v = pow(pow(sigma, 2) + 3 * pow(tau, 2), 0.5) * pow(10, -6)
@@ -124,7 +124,7 @@ Lambda = nju * l / i
 Fcr = 480 * pi * d1 * d1 / 4 / (1 + 0.0002 * Lambda * Lambda) / 1000
 Ssc = Fcr / F
 Ss = (2.5, 4)
-if Ss[0] < Ssc < Ss[1]:
+if Ss[0] < Ssc:
     print('螺杆稳定性合格。')
 else:
     print('螺杆稳定性不合格，请检查数据！！！！！！！')
@@ -136,7 +136,7 @@ delta = 10
 D2 = ceil(0.6 * d)
 D3 = ceil(2.4 * d)
 p_ = 20
-D4 = ceil(pow((4 * F) / (pi * p_) + pow(D2, 2), 0.5))
+D4 = ceil(pow((4 * F * 1000) / (pi * p_) + pow(D2, 2), 0.5))
 print('δ = ', delta)
 print('托杯高 = ', 1.6 * d)
 print('D2 = ', D2, 'mm')
@@ -148,10 +148,10 @@ print('###############手柄设计###############\n'
       '材料：Q235 碳钢')
 # #手柄长度
 mu = 0.06
-M1 = F * math.tan(phi + rho_) * (d2 / 2)
+M1 = F * math.tan((phi + rho_) * pi / 180) * (d2 / 2)
 M2 = 0.25 * (D2 + D4) * mu * F
 K = 200
-Lp = (M1 + M2) / K
+Lp = (M1 + M2) / K * 1000
 Lw = Lp + (0.5 * D4) + 100
 H1 = H + 20  # 提前计算底座参量用于确定千斤顶的最小高度
 HH_min = H1 + H_ + 1.5 * P + 1.5 * d + 1.6 * d  # 千斤顶的最小高度
@@ -186,4 +186,4 @@ eta = (F * P) / (2 * pi * (M1 + M2))
 if eta < 0.3:
     print('η = ', eta, '<0.3\n因此， 设计效率符合要求。')
 else:
-    print('我也没办法了，你效率太高了，手算吧╮(─▽─)╭')
+    print('η = ', eta, '我也没办法了，你效率太高了，手算吧╮(─▽─)╭')
