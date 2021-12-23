@@ -17,9 +17,11 @@ from math import ceil, pi
 # #输入设计原始数据
 F = 20  # 最大起重量（KN）
 H = 150  # 最大起升高度（mm）
-print()
-F = int(input('请输入最大起重量（KN）: '))
-H = int(input('请输入最大起升高度（mm）: '))
+# print('螺旋千斤顶主要零件：螺杆、螺母、托杯、手柄和底座。\n'
+#       '设计的原始数据：最大起重量 F=', F, 'KN、最大升起高度 H=', H, 'mm。\n'
+#       '螺旋千斤顶的设计步骤如下：\n')
+# F = int(input('请输入最大起重量（KN）: '))
+# H = int(input('请输入最大起升高度（mm）: '))
 sigma_s = 353  # 45号钢屈服极限（MPa）
 S = 3  # 安全系数
 alpha = 0  # (°)
@@ -53,7 +55,6 @@ for P in P_list:
         h = P / 2
         d_float = d1_min + P
         for d in P_and_d_first_list[str(P)]:
-            # d = 28
             d1 = d - P
             # 自锁验算
             rho_ = math.atan(mu / math.cos(alpha / 2)) * 180 / pi
@@ -63,9 +64,12 @@ for P in P_list:
                 print('最大起重量F = ', F, 'KN')
                 print('最大升起高度H = ', H, 'mm')
                 print('###############螺杆设计###############')
-                print('螺距P = ', P, 'mm')
+                print('螺距应 = ', P_float)
+                print('圆整后，螺距P = ', P, 'mm')
                 print('螺纹的工作高度h = ', h, 'mm')
-                print('螺纹大径d = ', d, 'mm')
+                print('螺杆内径d1应 ≥ ', d1_min)
+                print('则螺纹大径d ≥ ', d1_min + P)
+                print('圆整并参考国标后，螺纹大径d = ', d, 'mm')
                 print('螺纹内径d1 = ', d1, 'mm')
                 print('螺纹中径d2 = ', d2, 'mm')
                 print('螺纹中径升角Ψ = ', phi, '°')
@@ -85,6 +89,7 @@ T = F * d2 / 2 * math.tan((phi + rho_) * pi / 180)
 sigma = (4 * F * pow(10, 9)) / (pi * pow(d1, 2))
 tau = T / (0.2 * pow(d1, 3)) * pow(10, 9)
 sigma_v = pow(pow(sigma, 2) + 3 * pow(tau, 2), 0.5) * pow(10, -6)
+print('其中 T = ', T)
 if sigma_v < sigma_agree:
     print('σγ =', sigma_v, ' < [σ]，强度符合强度要求')
 else:
@@ -125,7 +130,10 @@ Fcr = 480 * pi * d1 * d1 / 4 / (1 + 0.0002 * Lambda * Lambda) / 1000
 Ssc = Fcr / F
 Ss = (2.5, 4)
 if Ss[0] < Ssc:
-    print('螺杆稳定性合格。')
+    print('Fcr = ', Fcr,
+          '\n进而可得 Ssc = ', Ssc,
+          '由于螺杆稳定性安全因数Ss = 2.5 ~ 4'
+          '\n螺杆稳定性合格。')
 else:
     print('螺杆稳定性不合格，请检查数据！！！！！！！')
 
