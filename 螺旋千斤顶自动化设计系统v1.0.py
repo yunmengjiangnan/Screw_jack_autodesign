@@ -164,12 +164,14 @@ Lw = Lp + (0.5 * D4) + 100
 H1 = H + 20  # 提前计算底座参量用于确定千斤顶的最小高度
 HH_min = H1 + H_ + 1.5 * P + 1.5 * d + 1.6 * d  # 千斤顶的最小高度
 if Lw < HH_min:
-    print('Lw 不超过千斤顶的最小高度，所以手柄实际长度为: ', Lw)
+    print('Lw 不超过千斤顶的最小高度 HH_min = ', HH_min,
+          '\n所以手柄实际长度为: ', Lw)
 else:
-    Lw_new = round(Lw % HH_min)
+    Lw_new = math.floor(HH_min)
     Ht = Lw - Lw_new  # 套筒长度
-    print('Lw 不应超过千斤顶的最小高度，所以将手柄实际长度改为: ', Lw_new,
-          '另外加套筒，套筒长 ', Ht)
+    print('Lw 不应超过千斤顶的最小高度 HH_min = ', HH_min,
+          '\n所以将手柄实际长度改为: ', Lw_new,
+          '\n另外加套筒，套筒长 ', Ht)
 # #手柄直径
 sigma_b = 120
 dp = pow((K * Lp) / (0.1 * sigma_b), 1 / 3)
